@@ -1,0 +1,26 @@
+# All rules files related to plugins should require at least engine version 10
+- required_engine_version: 10
+
+- required_plugin_versions:
+  - name: cloudtrail
+    version: 0.10.0
+  - name: json
+    version: 0.7.0
+
+# Note that this rule is disabled by default. It's useful only to
+# verify that the cloudtrail plugin is sending events properly.  The
+# very broad condition evt.num > 0 only works because the rule source
+# is limited to aws_cloudtrail. This ensures that the only events that
+# are matched against the rule are from the cloudtrail plugin (or
+# a different plugin with the same source).
+- rule: All Cloudtrail Events
+  desc: Match all cloudtrail events.
+  condition:
+    evt.num > 0
+  output: Some Cloudtrail Event (evtnum=%evt.num info=%evt.plugininfo ts=%evt.time.iso8601 id=%ct.id error=%ct.error)
+  priority: DEBUG
+  tags:
+  - cloud
+  - aws
+  source: aws_cloudtrail
+  enabled: true

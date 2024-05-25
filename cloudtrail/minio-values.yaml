@@ -1,0 +1,8 @@
+mode: standalone
+
+rootUser: "rootuser"
+rootPassword: "rootpass123"
+
+resources:
+  requests:
+    memory: 4Gi

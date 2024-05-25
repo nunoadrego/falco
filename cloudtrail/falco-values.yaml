@@ -1,0 +1,53 @@
+controller:
+  kind: deployment
+
+collectors:
+  enabled: false
+
+driver:
+  enabled: false
+
+extra:
+  env:
+    - name: AWS_DEFAULT_REGION
+      value: us-east-1
+    - name: AWS_ACCESS_KEY_ID
+      value: rootuser
+    - name: AWS_SECRET_ACCESS_KEY
+      value: rootpass123
+    - name: AWS_ENDPOINT_URL
+      value: http://minio.minio.svc.cluster.local:9000
+
+falco:
+  load_plugins:
+    - cloudtrail
+    - json
+
+  plugins:
+    - name: cloudtrail
+      library_path: custom/libcloudtrail.so
+      init_config: '{"S3AccountList": ["9876,4321"], "S3Interval": "10d"}'
+      open_params: "s3://my-local-bucket-falcolab/AWSLogs/o-1234/"
+    - name: json
+      library_path: libjson.so
+      init_config: ""
+
+falcoctl:
+  config:
+    artifact:
+      install:
+        refs: ["falco-rules:2", "json:latest"]
+
+mounts:
+  volumes:
+    - name: local-plugins
+      hostPath:
+        path: /local-plugins
+    - name: local-rules
+      hostPath:
+        path: /local-rules
+  volumeMounts:
+    - name: local-plugins
+      mountPath: /usr/share/falco/plugins/custom
+    - name: local-rules
+      mountPath: /etc/falco/rules.d
