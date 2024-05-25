@@ -16,4 +16,4 @@ aws --endpoint-url http://127.0.0.1:9000 \
 ```
 
 # References
-- https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-log-file-examples.html
+- [CloudTrail Log File Examples](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-log-file-examples.html)

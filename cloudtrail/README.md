@@ -110,5 +110,3 @@ kind delete cluster --name falcolab
 ## Falco
 - [Falco Helm Chart](https://github.com/falcosecurity/charts/tree/master/charts/falco)
 - [Falco CloudTrail Plugin](https://github.com/falcosecurity/plugins/tree/main/plugins/cloudtrail)
-
-
